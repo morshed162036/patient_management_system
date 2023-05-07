@@ -1,0 +1,4 @@
+$table->string('address')->nullable();
+$table->enum('gender',['Male','Female','Other']);
+$table->timestamp('date_of_birth')->nullable();
+$table->string('blood_group')->nullable();
