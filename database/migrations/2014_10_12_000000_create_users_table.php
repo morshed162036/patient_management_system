@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status',['Active','Inactive'])->bydefault('Active');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('user_type')->bydefault('Patient');
-            $table->biginteger('use_id');
+            $table->biginteger('user_id');
             $table->string('password');
             $table->rememberToken();
             $table->string('profile_photo_path', 2048)->nullable();

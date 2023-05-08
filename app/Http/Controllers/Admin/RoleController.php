@@ -4,35 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
-class AdminController extends Controller
+
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-    public function dashboard(){
-        return view('backend.admin.dashboard');
-    }
-    public function login(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all();
-            $valodate = $request->validate([
-                'email' => 'required|email|max:255',
-                'password' => 'required',
-            ]);
-
-            if(Auth::guard('web')->attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>1])){
-                return redirect('admin/dashboard');
-                }
-            else{
-                return redirect()->back()->with('error','Invalid Email or Password');
-            }
-        }
-        return view('backend.admin.login');
+        return view('backend.role.index');
     }
 
     /**
