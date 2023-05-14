@@ -18,5 +18,6 @@ class SuperAdminSeeder extends Seeder
             ['id'=>'1','name'=>'Morshed Ahmed','email'=>'superadmin@gmail.com','mobile'=>'017','status'=>'Active','user_type'=>'Super Admin','user_id'=>0,'password'=>'$2a$12$/Wla/XJzQB7ZdUl/eCCxtOnndvu/8If2xyCTdddOyD1gDhdNN7TyC']
         ];
         User::insert($superAdmin);
+        User::find(1)->assignRole('Super Admin');
     }
 }

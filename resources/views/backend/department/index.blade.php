@@ -12,7 +12,7 @@
                                 <h5
                                     class="content-header-title float-left pr-1 mb-0"
                                 >
-                                    Department
+                                    Departments
                                 </h5>
                                 <div class="breadcrumb-wrapper col-12">
                                     <ol class="breadcrumb p-0 mb-0">
@@ -22,7 +22,7 @@
                                             ></a>
                                         </li>
                                         <li class="breadcrumb-item active">
-                                            DepartmentList
+                                            Departments
                                         </li>
                                     </ol>
                                 </div>
@@ -31,7 +31,36 @@
                     </div>
                 </div>
                 <div class="content-body">
-                    <!-- Zero configuration table -->
+                    <!-- Success & Error Message -->
+                        @if(Session::has('success'))
+                            <div class="alert alert-success alert-dismissible mb-2" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <div class="d-flex align-items-center">
+                                    <i class="bx bx-like"></i>
+                                    <span>
+                                        {{ Session::get('success') }}
+                                    </span>
+                                </div>
+                            </div>
+                        @elseif (Session::has('error'))
+                            <div class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <div class="d-flex align-items-center">
+                                    <i class="bx bx-error"></i>
+                                    <span>
+                                        {{ Session::get('error') }}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+
+                        
+                    <!-- End Success & Error Message -->
+
                     <section id='column-selectors'>
                         <div class="row">
                             <div class="col-12">
@@ -40,37 +69,45 @@
                                         <h4 class="card-title">
                                             
                                         </h4>
-                                        <a href="{{ route('department.create') }}" class="btn btn-primary">+ Add Department</a>
+                                        <a href="{{ route('department.create') }}" class="btn btn-primary">+ New Department</a>
                                     </div>
                                     <div class="card-content">
                                         <div class="card-body card-dashboard">
                                             <div class="table-responsive">
-                                                <table class="table table-striped dataex-html5-selectors" >
+                                                <table class="table table-bordered dataex-html5-selectors" >
                                                     <thead>
                                                         <tr>
-                                                            <th>Department Name</th>
-                                                            <th>Description</th>
-                                                            <th>Created Date</th>
-                                                            <th>Action</th>
+                                                            <th class="col-2">Department Name</th>
+                                                            <th class="col-8">Description</th>
+                                                            <th class="col-2">Created Date</th>
+                                                            <th class="col-0">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                System Architect
-                                                            </td>
-                                                            <td>Tiger Nixon</td>
-                                                            <td>2011/04/25</td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
-                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                        <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
-                                                                        <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                                        @if ($departments != null)
+                                                            @foreach ($departments as $department)
+                                                            <tr class="border">
+                                                                <td class="text-primary">{{ $department->name }}</td>
+                                                                <td>{{ $department->description }}</td>
+                                                                <td>{{ $department->created_at }}</td>
+                                                                <td>
+                                                                    <div class="dropdown">
+                                                                        <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
+                                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                                            <a class="dropdown-item" href="{{ route('department.edit',$department->id) }}"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                                            
+                                                                            <form action="{{ route('department.destroy',$department->id) }}" method="post">
+                                                                                @csrf
+                                                                                @method('Delete')
+                                                                                <button type="submit" class="dropdown-item"><i class="bx bx-trash mr-1"></i> delete</button>
+
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>  
+                                                            @endforeach
+                                                        @endif
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>

@@ -66,6 +66,7 @@ Route::prefix('/admin')->group(function(){
 
         Route::resource('user', UserController::class);
         Route::resource('role', RoleController::class);
+        Route::post('role/permission-to-role/{role}', [RoleController::class,'permissionToRole'])->name('role.permissionToRole');
         Route::resource('department', DepartmentController::class);
     });
 });
